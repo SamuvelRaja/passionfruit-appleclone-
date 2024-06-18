@@ -8,13 +8,14 @@ import { useEffect, useState } from "react"
 const Hero = () => {
     const[src, setSrc]=useState(heroVideo)
     function changeSrc(){
-      if(this.window.innerWidth>588){
+      if(window.innerWidth>588){
           setSrc(heroVideo)
         }else{
           setSrc(smallHeroVideo)
         }
     }
     useEffect(()=>{
+      changeSrc()
     window.addEventListener("resize",changeSrc)
     return ()=>{
         window.removeEventListener("resize",changeSrc)
@@ -26,19 +27,29 @@ const Hero = () => {
       opacity:1,
       delay:1
     })
+    gsap.to(".rise",{
+      opacity:1,
+      delay:1,
+      y:-50,
+      stagger:0.2
+    })
   })
   
 
 
   return (
     <section className="nav-height">
-      <div className="flex flex-col flex-center h-5/6">
-        <h1 className="text-[#94928D] opacity-0 herotxt text-3xl text-center  font-semibold mb-5">iPhone 15 Pro</h1>
-          <div >
-            <video key={src} playsInline autoPlay muted className="pointer-events-none w-4/6 md:w-5/6 lg:w-4/6 mx-auto">
+      <div className="flex flex-col flex-center h-4/6 mt-4 ">
+        <h1 className="text-[#94928D] opacity-0 herotxt text-2xl md:text-3xl text-center  font-semibold mb-5">iPhone 15 Pro</h1>
+          <div className="px-4">
+            <video key={src} playsInline autoPlay muted className="pointer-events-none w-full md:w-5/6 lg:w-4/6 mx-auto">
               <source src={src} type="video/mp4" />
             </video>
         </div>
+      </div>
+      <div className=" flex-col  flex-wrap flex-center gap-1 md:gap-4 mt-8">
+        <a href="" className="btn rise opacity-0 relative">Buy</a>
+        <p className="rise opacity-0 text-[14px] md:text-xl relative">From ₹134900.00 ‡</p>
       </div>
     </section>
   )
