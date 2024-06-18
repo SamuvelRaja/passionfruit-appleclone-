@@ -3,7 +3,6 @@ import { appleImg, bagImg,searchImg } from "../utils"
 
 
 const Header = () => {
-    console.log(navLists)
   return (
         <>
             <header className="flex justify-between py-5 px-10">
@@ -13,7 +12,7 @@ const Header = () => {
                     <div className="lg:flex justify-center w-full hidden ">
                         {
                             navLists.map((navs)=>{
-                                return <a href={"/"+navs} className="px-5 text-xs cursor-pointer text-gray-400 hover:text-white transition-all">{navs}</a>
+                                return <a key={navs} href={"/"+navs} className="px-5 text-xs cursor-pointer text-gray-400 hover:text-white transition-all">{navs}</a>
                             })
                         }
                         
