@@ -2,13 +2,13 @@ import React from 'react'
 import { hightlightsSlides } from '../constants'
 import Video from './Video'
 
-const carousals = () => {
+const Carousals = () => {
   return (
     <div className='flex items-center'>
         {
             hightlightsSlides.map((slide,ind)=>(
                 <div key={slide.id} className='sm:pr-20 pr-10' id='slider'>
-                    <div className="video-carousal-container">
+                    <div className="video-carousel-container">
                         <div className="bg-black rounded-3xl w-full h-full flex-center overflow-hidden">
                             <Video src={slide.video} autoplay={false} classname={""} />
                         </div>
@@ -27,4 +27,4 @@ const carousals = () => {
   )
 }
 
-export default carousals
+export default Carousals

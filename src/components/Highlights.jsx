@@ -3,6 +3,7 @@ import { rightImg, watchImg } from '../utils'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import Carousals from './Carousal'
 
 
 const Highlights = () => {
@@ -29,6 +30,7 @@ const Highlights = () => {
                         <a href="#" className='link hgl'>Watch the event &nbsp; <img src={rightImg} alt="right" /></a>
                     </div>
                 </div>
+                <Carousals/>
             </div>
         </section>
     )
