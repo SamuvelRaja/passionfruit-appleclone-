@@ -2,7 +2,8 @@ import { useGSAP } from "@gsap/react"
 import gsap from "gsap"
 import { heroVideo, smallHeroVideo } from "../utils"
 import { useEffect, useState } from "react"
-
+import Video from "./Video"
+Video
 
 
 const Hero = () => {
@@ -42,9 +43,7 @@ const Hero = () => {
       <div className="flex flex-col flex-center h-4/6 mt-4 ">
         <h1 className="text-[#94928D] opacity-0 herotxt text-2xl md:text-3xl text-center  font-semibold mb-5">iPhone 15 Pro</h1>
           <div className="px-4">
-            <video key={src} playsInline autoPlay muted className="pointer-events-none w-full md:w-5/6 lg:w-4/6 mx-auto">
-              <source src={src} type="video/mp4" />
-            </video>
+            <Video  src={src} autoplay={true} className="pointer-events-none w-full md:w-5/6 lg:w-4/6 mx-auto" />
         </div>
       </div>
       <div className=" flex-col  flex-wrap flex-center gap-1 md:gap-4 mt-8">
