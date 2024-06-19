@@ -43,7 +43,7 @@ const Hero = () => {
       <div className="flex flex-col flex-center h-4/6 mt-4 ">
         <h1 className="text-[#94928D] opacity-0 herotxt text-2xl md:text-3xl text-center  font-semibold mb-5">iPhone 15 Pro</h1>
           <div className="px-4">
-            <Video  src={src} autoplay={true} className="pointer-events-none w-full md:w-5/6 lg:w-4/6 mx-auto" />
+            <Video  src={src} autoPlay={true} playsInline={true} muted={true} key={src} className="pointer-events-none w-full md:w-5/6 lg:w-4/6 mx-auto" uref={""} />
         </div>
       </div>
       <div className=" flex-col  flex-wrap flex-center gap-1 md:gap-4 mt-8">

@@ -1,9 +1,10 @@
 
 
-const Video = ({ src, autoplay, classname }) => {
+const Video = (props) => {
+    
     return (
-        <video key={src} playsInline autoPlay={autoplay} preload="auto" muted className={classname}>
-                <source src={src} type="video/mp4" />
+        <video {...props}>
+            <source src={props.src} type="video/mp4" />
         </video>
     )
 }
