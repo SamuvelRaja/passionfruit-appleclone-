@@ -8,8 +8,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 const Carousals = () => {
     const videoRef=useRef([])
-    const spanRef=useRef([])
-    const videoDivRef=useRef([])
+    const videoSpanRef=useRef([])
 
     const [videostat, setVideostat]=useState({
         isPlaying:false,
@@ -36,7 +35,9 @@ const Carousals = () => {
                 })
             }
         })
+
     },[])
+
 
     useEffect(()=>{
         if(loadedData.length>3){
@@ -44,9 +45,11 @@ const Carousals = () => {
                 videoRef.current[id].pause()
             }else{
                 videoRef.current[id].play()
+               
+
             }
         }
-        console.log(videostat,"play")
+        
     },[loadedData,isPlaying,id])
     
         useGSAP(()=>{
@@ -55,7 +58,68 @@ const Carousals = () => {
                 duration: 2,
                 ease: "power2.inOut",
             })
-        },[id])
+                let spanref=videoSpanRef.current
+                let spanWidth;
+                if(window.innerWidth>768){
+                    spanWidth="7vw"
+                }else{
+                    spanWidth="10vw"
+                }
+                //span animation
+                
+                
+                    if(spanref[id-1]){
+                        
+                        gsap.to(spanref[id-1], {
+                            width:"0.5rem",
+                            ease:'power1.inOut',
+                            onComplete:function(){
+                                console.log("reduce",id, spanref[id-1])
+                            }
+                    })
+                    }
+                    gsap.to(spanref[id], {
+                        width:spanWidth,
+                        ease:'power1.inOut'
+                })
+                let spanInRef=videoSpanRef.current[id].children[0]
+                let timeln=gsap.to(spanInRef,{
+                    onUpdate:function(){
+                        const progress = Math.ceil(timeln.progress() * 100)
+                        console.log(progress,"po")
+                        gsap.to(spanInRef, {
+                            width: `${progress}%`,
+                            backgroundColor: "white",
+                            });
+                    },
+                    onComplete:function(){
+                        gsap.to(spanInRef,{
+                            width:'8px',
+                            backgroundColor:"#afafaf"
+                        })
+                    }
+                })
+                if (id == 0) {
+                        timeln.restart();
+                    }
+
+            // update the progress bar
+            const timelnUpdate = () => {
+                timeln.progress(
+                videoRef.current[id].currentTime /
+                    videoRef.current[id].videoDuration
+                );
+            };
+
+            if (isPlaying) {
+                // ticker to update the progress bar
+                gsap.ticker.add(timelnUpdate);
+            } else {
+                // remove the ticker when the video is paused (progress bar is stopped)
+                gsap.ticker.remove(timelnUpdate);
+            }
+                        
+                },[id])
    
     function handleProcess(prp){
         switch(prp){
@@ -77,10 +141,10 @@ const Carousals = () => {
      const handleLoadedMetaData = (i, e) => {setLoadedData((pre) => [...pre, e])};
   return (
         <>
-            <div className='flex items-center slide-div'>
+            <div className='flex items-center '>
                 {
                     hightlightsSlides.map((slide,ind)=>(
-                        <div key={slide.id} className='sm:pr-20 pr-10' id='slider'>
+                        <div key={slide.id} className='sm:pr-20 pr-10 slide-div' >
                             <div className="video-carousel-container">
                                 <div className="bg-black rounded-3xl w-full h-full flex-center overflow-hidden">
                                     <video  autoPlay={false} muted 
@@ -125,7 +189,11 @@ const Carousals = () => {
                 <div className="rounded-full flex-center py-5 px-7 bg-gray-300 backdrop-blur gap-2">
                     {
                         hightlightsSlides.map((_,i)=>(
-                            <span key={Math.random()*i} className="w-2 bg-gray-200 h-2 rounded-full"></span>
+                            <span key={Math.random()*i} onClick={()=>{
+                                setVideostat((prev)=>({...prev,id:i,isPlaying:true,isEnded:false}))
+                            }} className="w-2 bg-gray-200 h-2 rounded-full" dat-id={i} ref={(el) => (videoSpanRef.current[i] = el)}>
+                                <span className="absolute h-2 w-full max-w-[100%] rounded-full" ></span>
+                            </span>
                         ))
                     }
                 </div>
