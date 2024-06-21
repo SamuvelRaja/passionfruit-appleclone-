@@ -107,7 +107,7 @@ const Carousals = () => {
             const timelnUpdate = () => {
                 timeln.progress(
                 videoRef.current[id].currentTime /
-                    videoRef.current[id].videoDuration
+                    hightlightsSlides[id].videoDuration
                 );
             };
 
@@ -191,7 +191,7 @@ const Carousals = () => {
                         hightlightsSlides.map((_,i)=>(
                             <span key={Math.random()*i} onClick={()=>{
                                 setVideostat((prev)=>({...prev,id:i,isPlaying:true,isEnded:false}))
-                            }} className="w-2 bg-gray-200 h-2 rounded-full" dat-id={i} ref={(el) => (videoSpanRef.current[i] = el)}>
+                            }} className="w-2 bg-gray-200 relative h-2 rounded-full " dat-id={i} ref={(el) => (videoSpanRef.current[i] = el)}>
                                 <span className="absolute h-2 w-full max-w-[100%] rounded-full" ></span>
                             </span>
                         ))
