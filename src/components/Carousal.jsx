@@ -42,6 +42,7 @@ const Carousals = () => {
         videoRef.current[id].play();
       }
     }
+    console.log()
   }, [loadedData, isPlaying, id]);
 
   useGSAP(() => {
