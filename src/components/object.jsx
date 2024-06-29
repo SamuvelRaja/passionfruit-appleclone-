@@ -10,7 +10,7 @@ import React, { useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
 import phone from "../../public/assets/models/scene.glb"
 
-export function Model(props) {
+  function Model(props) {
   const { nodes, materials } = useGLTF(phone)
   return (
     <group {...props} dispose={null}>
@@ -234,7 +234,7 @@ export function Model(props) {
     </group>
   )
 }
+export default Model
 
 
-
-
+useGLTF.preload("../../public/assets/models/scene.glb");

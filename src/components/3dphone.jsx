@@ -1,21 +1,26 @@
 import { Canvas } from '@react-three/fiber'
 import React from 'react'
-import { Stats, OrbitControls } from '@react-three/drei'
-import { Model } from './object'
+import { OrbitControls, View, PerspectiveCamera } from '@react-three/drei'
+import  Model  from './object'
+import Lights from './lights'
 
 
-const Iphone = () => {
+
+const Iphone = ({ index, groupRef, gsapType, controlRef, setRotationState, size, item }) => {
   return (
-    <section style={{ width: '100%', height: '100vh', position: 'relative' }}>
-        <Canvas camera={{ near: 0.1, far: 1000 }}>
-            <ambientLight intensity={0.5} />
-            <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
-            <pointLight position={[-10, -10, -10]} />
+          <View
+            index={index}
+            id={gsapType}
+            className={`w-full h-full absolute ${index === 2 ? 'right-[-100%]' : ''}`}
+          >
+            <ambientLight intensity={0.3} />
+            <PerspectiveCamera makeDefault position={[0, 0, 4]} />
+
+            <Lights/>
             <Model position={500} />
             <OrbitControls enableDamping={true}/>
-            <Stats/>
-        </Canvas>
-    </section>
+            
+        </View>
   )
 }
 

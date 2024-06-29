@@ -78,8 +78,7 @@ const Carousals = () => {
       onUpdate: function () {
         let currentProgress = 0;
         const progress = Math.ceil(timeln.progress() * 100);
-        console.log(progress, "po");
-
+        
         if (progress != currentProgress) {
           currentProgress = progress;
 

@@ -3,7 +3,8 @@ import Hero from "./components/Hero"
 import Header from "./components/Header"
 import Highlights from "./components/Highlights"
 import Iphone from "./components/3dphone"
-Header
+import Closelook from "./components/closelook"
+
 
 
 function App() {
@@ -14,7 +15,7 @@ function App() {
     <Header/>
     <Hero/>
     <Highlights/>
-    <Iphone/>
+    <Closelook/>
   </main>
   )
 }
