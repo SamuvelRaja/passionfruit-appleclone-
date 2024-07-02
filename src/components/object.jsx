@@ -5,13 +5,32 @@ License: CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
 Source: https://sketchfab.com/3d-models/apple-iphone-15-pro-max-black-df17520841214c1792fb8a44c6783ee7
 Title: Apple iPhone 15 Pro Max Black
 */
+import * as THREE from 'three'
+import React, { useRef, useEffect } from 'react'
+import { useGLTF, useTexture } from '@react-three/drei'
+import phone from "/assets/models/scene.glb"
+import { yellowImg } from '../utils'
 
-import React, { useRef } from 'react'
-import { useGLTF } from '@react-three/drei'
-import phone from "../../public/assets/models/scene.glb"
 
   function Model(props) {
   const { nodes, materials } = useGLTF(phone)
+  console.log(props,props.hex)
+  const texture=useTexture(yellowImg)
+      useEffect(() => {
+      Object.entries(materials).map((material) => {
+        // these are the material names that can't be changed color
+        if (
+          material[0] !== "zFdeDaGNRwzccye" &&
+          material[0] !== "ujsvqBWRMnqdwPx" &&
+          material[0] !== "hUlRcbieVuIiOXG" &&
+          material[0] !== "jlzuBkUzuJqgiAK" &&
+          material[0] !== "xNrofRCqOXXHVZt"
+        ) {
+          material[1].color = new THREE.Color(props.hex);
+        }
+        material[1].needsUpdate = true;
+      });
+    }, [materials, props.img]);
   return (
     <group {...props} dispose={null}>
       <mesh
@@ -237,4 +256,4 @@ import phone from "../../public/assets/models/scene.glb"
 export default Model
 
 
-useGLTF.preload("../../public/assets/models/scene.glb");
+useGLTF.preload("/assets/models/scene.glb");
