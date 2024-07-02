@@ -8,19 +8,15 @@ import Lights from './lights'
 
 const Iphone = ({ index, groupRef, gsapType, controlRef, setRotationState, size, item }) => {
   return (
-          <View
-            index={index}
-            id={gsapType}
-            className={`w-full h-full absolute ${index === 2 ? 'right-[-100%]' : ''}`}
-          >
-            <ambientLight intensity={0.3} />
-            <PerspectiveCamera makeDefault position={[0, 0, 4]} />
-
+        <>
+          <Canvas shadows dpr={[1, 1.5]} gl={{ antialias: false }} >
+            <PerspectiveCamera makeDefault position={[0, 0,0.3]} />
             <Lights/>
-            <Model position={500} />
-            <OrbitControls enableDamping={true}/>
-            
-        </View>
+            <Model />
+            <OrbitControls enableDamping={true} enableZoom={false} enablePan={false} enableRotate={true}/>
+          </Canvas>
+        </>
+          
   )
 }
 
