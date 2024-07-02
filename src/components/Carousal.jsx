@@ -188,7 +188,7 @@ const Carousals = () => {
           </div>
         ))}
       </div>
-      <div className="flex-center mt-6">
+      <div className="flex-center mt-6" >
         <div className="rounded-full flex-center py-5 px-7 bg-gray-300 backdrop-blur gap-2">
           {hightlightsSlides.map((_, i) => (
             <span

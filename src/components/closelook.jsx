@@ -23,7 +23,7 @@ const Closelook = () => {
       )
   },[])
   return (
-    <section className="h-[100vh] ">
+    <section className="h-[100vh] mb-[200px]">
         <div className="screen-max-width">
             <h2 id="cl" className="mt-5 mx-5 section-heading">
                 Take a closer look.
