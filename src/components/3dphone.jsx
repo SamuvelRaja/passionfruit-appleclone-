@@ -68,6 +68,9 @@ const Iphone = ({}) => {
         <>
           <Canvas  gl={{ antialias: true }} >
             <PerspectiveCamera makeDefault position={[0, 0, 5]} />
+            
+            <directionalLight color="white" intensity={10} position={[0, 2, 0.9]} />
+            <directionalLight color="white" intensity={10} position={[0, -1, 0.5]} /> 
             <Lights/>
             <Model />
             <Suspense fallback={<Loader />}>
