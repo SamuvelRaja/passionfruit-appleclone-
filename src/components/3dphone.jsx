@@ -43,7 +43,6 @@ const Iphone = ({}) => {
   },
 ];
     const sizes = ['6.1"', '6.7"'];
-    const controlsRef = useRef();
     const canvasRef = useRef(null);
       const [selectedColor, setSelectedColor] = useState(colors[0]); // Initialize with first color
       const [isPro, setIsPro] = useState(false); // Pro model state
@@ -108,7 +107,7 @@ const Iphone = ({}) => {
                   img={selectedColor.img}
                 />
             </Suspense>
-            <OrbitControls ref={controlsRef}
+            <OrbitControls 
               enableDamping={true} 
               enableZoom={false}
               minPolarAngle={(deviceWidth<640) ? Math.PI / 2 : 0}
