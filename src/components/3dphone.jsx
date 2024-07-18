@@ -8,7 +8,7 @@ import gsap from 'gsap'
 import Loader from './loader'
 import { yellowImg,blackImg,blueImg,whiteImg } from '../utils'
 
-
+const deviceWidth=window.innerWidth
 
 const Iphone = ({}) => {
 
@@ -42,13 +42,12 @@ const Iphone = ({}) => {
     img: blackImg,
   },
 ];
-    console.log(blackImg,whiteImg)
     const sizes = ['6.1"', '6.7"'];
     const controlsRef = useRef();
     const canvasRef = useRef(null);
       const [selectedColor, setSelectedColor] = useState(colors[0]); // Initialize with first color
       const [isPro, setIsPro] = useState(false); // Pro model state
-      console.log(selectedColor,"ss")
+      
       const handleColorChange = (color) => {
         setSelectedColor(color);
         
@@ -67,27 +66,32 @@ const Iphone = ({}) => {
     },[isPro])
 
     // handling touch in mobile
-
-    
-
-  useEffect(() => {
+    useEffect(() => {
     const canvas = canvasRef.current;
-    const handleTouchStart = (event) => {
-      controlsRef.current.enabled = false;
+
+    let startY;
+    let startScrollY;
+
+    const handleTouchStart = (e) => {
+      startY = e.touches[0].clientY;
+      startScrollY = window.scrollY;
     };
 
-    const handleTouchEnd = (event) => {
-      controlsRef.current.enabled = true;
+    const handleTouchMove = (e) => {
+      const deltaY = e.touches[0].clientY - startY;
+      window.scrollTo(0, startScrollY - deltaY);
     };
 
     canvas.addEventListener('touchstart', handleTouchStart);
-    canvas.addEventListener('touchend', handleTouchEnd);
+    canvas.addEventListener('touchmove', handleTouchMove);
 
     return () => {
       canvas.removeEventListener('touchstart', handleTouchStart);
-      canvas.removeEventListener('touchend', handleTouchEnd);
+      canvas.removeEventListener('touchmove', handleTouchMove);
     };
   }, []);
+
+  
   return (
         <>
           <Canvas  gl={{ antialias: true }} ref={canvasRef} >
@@ -104,11 +108,16 @@ const Iphone = ({}) => {
                   img={selectedColor.img}
                 />
             </Suspense>
-            <OrbitControls ref={controlsRef} enableDamping={true} enableZoom={false} enablePan={true} enableRotate={true}/>
+            <OrbitControls ref={controlsRef}
+              enableDamping={true} 
+              enableZoom={false}
+              minPolarAngle={(deviceWidth<640) ? Math.PI / 2 : 0}
+              maxPolarAngle={(deviceWidth<640) ? Math.PI / 2 : Math.PI}
+              />
           </Canvas>
           <p className='text-center text-[12px] font-light mb-5'>{selectedColor.title}</p>
-          <div className="iphone-toggle flex justify-center gap-4"> 
-            <div className="color-selection rounded-full backdrop-blur bg-gray-300 h-[50px]  py-3 px-4  flex">
+          <div className="iphone-toggle flex flex-col items-center md:flex-row pb-8 justify-center gap-4"> 
+            <div className="color-selection rounded-full backdrop-blur bg-gray-300 h-[50px] max-w-[168px]  py-3 px-4  flex">
               {colors.map((color) => (
                 <button
                   key={color.id}
@@ -119,7 +128,7 @@ const Iphone = ({}) => {
                 />
               ))}
             </div>
-            <div className="pro-toggle w-full max-w-[290px] rounded-full backdrop-blur bg-gray-300 h-[50px]   flex ">
+            <div className="pro-toggle w-full max-w-[290px] rounded-full backdrop-blur bg-gray-300 h-[50px]   flex  ">
               <div className='flex w-full '>
                 <div className='rounded-full bg-[#fff] border-2 border-[#0000bb] shadow-white tg-bar w-[48%]'>
                 </div>

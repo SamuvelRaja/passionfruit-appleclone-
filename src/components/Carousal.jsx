@@ -101,7 +101,7 @@ const Carousals = () => {
 
     // update the progress bar
     const timelnUpdate = () => {
-      if(!videoRef.current[id].paused && !videoRef.current[id].ended){
+      if(videoRef.current[id]){
         timeln.progress(
           videoRef.current[id].currentTime / hightlightsSlides[id].videoDuration
         );
