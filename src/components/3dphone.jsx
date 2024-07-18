@@ -1,5 +1,5 @@
 import { Canvas } from '@react-three/fiber'
-import React, { Suspense, useState } from 'react'
+import React, { Suspense, useRef, useState,useEffect } from 'react'
 import { OrbitControls, View, PerspectiveCamera } from '@react-three/drei'
 import  Model  from './object'
 import Lights from './lights'
@@ -44,7 +44,8 @@ const Iphone = ({}) => {
 ];
     console.log(blackImg,whiteImg)
     const sizes = ['6.1"', '6.7"'];
-
+    const controlsRef = useRef();
+    const canvasRef = useRef(null);
       const [selectedColor, setSelectedColor] = useState(colors[0]); // Initialize with first color
       const [isPro, setIsPro] = useState(false); // Pro model state
       console.log(selectedColor,"ss")
@@ -64,9 +65,32 @@ const Iphone = ({}) => {
           ease:"expo.out"
         })
     },[isPro])
+
+    // handling touch in mobile
+
+    
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const handleTouchStart = (event) => {
+      controlsRef.current.enabled = false;
+    };
+
+    const handleTouchEnd = (event) => {
+      controlsRef.current.enabled = true;
+    };
+
+    canvas.addEventListener('touchstart', handleTouchStart);
+    canvas.addEventListener('touchend', handleTouchEnd);
+
+    return () => {
+      canvas.removeEventListener('touchstart', handleTouchStart);
+      canvas.removeEventListener('touchend', handleTouchEnd);
+    };
+  }, []);
   return (
         <>
-          <Canvas  gl={{ antialias: true }} >
+          <Canvas  gl={{ antialias: true }} ref={canvasRef} >
             <PerspectiveCamera makeDefault position={[0, 0, 5]} />
             
             <directionalLight color="white" intensity={10} position={[0, 2, 0.9]} />
@@ -80,7 +104,7 @@ const Iphone = ({}) => {
                   img={selectedColor.img}
                 />
             </Suspense>
-            <OrbitControls enableDamping={true} enableZoom={false} enablePan={false} enableRotate={true}/>
+            <OrbitControls ref={controlsRef} enableDamping={true} enableZoom={false} enablePan={true} enableRotate={true}/>
           </Canvas>
           <p className='text-center text-[12px] font-light mb-5'>{selectedColor.title}</p>
           <div className="iphone-toggle flex justify-center gap-4"> 

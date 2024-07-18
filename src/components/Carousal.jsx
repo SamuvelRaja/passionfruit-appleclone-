@@ -101,9 +101,12 @@ const Carousals = () => {
 
     // update the progress bar
     const timelnUpdate = () => {
-      timeln.progress(
-        videoRef.current[id].currentTime / hightlightsSlides[id].videoDuration
-      );
+      if(!videoRef.current[id].paused && !videoRef.current[id].ended){
+        timeln.progress(
+          videoRef.current[id].currentTime / hightlightsSlides[id].videoDuration
+        );
+      }
+      
     };
 
     if (isPlaying) {
